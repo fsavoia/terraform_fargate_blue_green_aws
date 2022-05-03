@@ -21,7 +21,10 @@ module "ec2" {
 # Deploy ECS Configurations
 #--------------------------------------------
 module "ecs" {
-  source = "./aws/modules/ecs"
+  source              = "./aws/modules/ecs"
+  security_group      = [module.network.aws_security_group]
+  subnets             = [module.network.public_subnet_id]
+  vpc_id              = module.network.vpc_id
 }
 
 #--------------------------------------------

@@ -62,13 +62,13 @@ variable "ecs_service_name" {
 
 variable "deployment_name" {
   type        = string
-  default     = "AppECS-awslabs-sample-svc-sample-app"
+  default     = "AppECS-poc-sample-svc-sample-app"
   description = "Define CodeDeploy Application Name"
 }
 
 variable "deployment_group_name" {
   type        = string
-  default     = "DgpECS-awslabs-sample-svc-sample-app"
+  default     = "DgpECS-poc-sample-svc-sample-app"
   description = "Define CodeDeploy Group Name"
 }
 
@@ -180,4 +180,16 @@ variable "codepipeline_service_role" {
   type        = string
   default     = "CodePipeline-service-role"
   description = "The CodePipeline service role"
+}
+
+variable "bucket_name" {
+  type        = string
+  default     = "poc-artifacts-bucket-fsavoia"
+  description = "The S3 Bucket name for Artifact Store"
+}
+
+variable "s3_object_key" {
+  type        = string
+  default     = "sample-app.zip"
+  description = "The S3 Object key for Application Artifact"
 }
