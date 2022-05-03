@@ -1,7 +1,3 @@
-######################################################################################
-####################### AUTO SCALING & CLOUD WATCH ALARMS ############################
-########## The autoscaling policies to scale the ecs service up and down. ############
-######################################################################################
 # CLOUDWATCH ALARM to monitor the CPU utilization of a service
 resource "aws_cloudwatch_metric_alarm" "high" {
   actions_enabled     = true

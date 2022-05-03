@@ -1,3 +1,9 @@
+variable "region" {
+  type        = string
+  default     = "us-east-1"
+  description = "Define region target"
+}
+
 variable "aws_lb_name" {
   type        = string
   default     = "lb-sample-app"
@@ -32,9 +38,19 @@ variable "security_group" {
   description = "Define Public Security Group"
 }
 
+variable "alb_security_group" {
+  type        = string
+  description = "Define Public Security Group"
+}
+
 variable "subnets" {
   type        = list(string)
   description = "Define ALB public subnet id"
+}
+
+variable "private_subnets" {
+  type        = list(string)
+  description = "Define ECS service private subnets id"
 }
 
 variable "alb_tg_prod_name" {
@@ -56,7 +72,7 @@ variable "vpc_id" {
 
 variable "ecs_cluster_name" {
   type        = string
-  default     = "poc-cluster"
+  default     = "poc-ecs-cluster"
   description = "Define ECS Cluster Name"
 }
 
@@ -70,4 +86,88 @@ variable "containerInsights" {
   type        = string
   default     = "disabled"
   description = "Define State from ECS containerInsights"
+}
+
+variable "launch_type" {
+  type        = string
+  default     = "FARGATE"
+  description = "Define launch type for the ECS Services"
+}
+
+variable "ecs_service_name" {
+  type        = string
+  default     = "poc-ecs-cluster-svc"
+  description = "Define ECS Service Name"
+}
+
+variable "ecs_platform_version" {
+  type        = string
+  default     = "1.4.0"
+  description = "Define ECS Platform version"
+}
+
+variable "image" {
+  type        = string
+  default     = "652839185683.dkr.ecr.us-east-1.amazonaws.com/sample-app:latest"
+  description = "Define Standard Task Definition image"
+}
+
+variable "container_name" {
+  type        = string
+  default     = "poc-app"
+  description = "Define container name"
+}
+
+variable "family" {
+  type        = string
+  default     = "td-poc-app"
+  description = "Define the task definition family name"
+}
+
+variable "memory_reservation" {
+  type        = number
+  default     = 256
+  description = "Define memory reservation for container"
+}
+
+variable "container_port" {
+  type        = number
+  default     = 3000
+  description = "Define container port"
+}
+
+variable "host_port" {
+  type        = number
+  default     = 3000
+  description = "Define host port"
+}
+
+variable "cpu" {
+  type        = string
+  default     = "512"
+  description = "Define CPU for task definition"
+}
+
+variable "memory" {
+  type        = string
+  default     = "1024"
+  description = "Define Memory for task definition"
+}
+
+variable "requires_compatibilities" {
+  type        = list(string)
+  default     = ["FARGATE"]
+  description = "Define compabilitie for task definition"
+}
+
+variable "network_mode" {
+  type        = string
+  default     = "awsvpc"
+  description = "Define network mode for task definition"
+}
+
+variable "deployment_controller" {
+  type        = string
+  default     = "CODE_DEPLOY"
+  description = "Deployment controller type"
 }
