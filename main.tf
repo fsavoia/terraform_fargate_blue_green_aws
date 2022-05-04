@@ -37,7 +37,6 @@ module "devops" {
   source = "./aws/modules/devops"
   # repo_name        = var.repo_name
   # repo_description = var.repo_description
-  ecr_name                      = var.ecr_name
   ecs_cluster_name              = module.ecs.ecs_cluster_name
   ecs_service_name              = module.ecs.ecs_service_name
   ecs_alarm_cpu_high_alarm_name = module.ecs.ecs_alarm_cpu_high_alarm_name
