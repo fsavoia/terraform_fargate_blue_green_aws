@@ -11,6 +11,11 @@ resource "aws_ecs_cluster" "ecs_cluster" {
   }
 }
 
+resource "aws_ecs_cluster_capacity_providers" "capacity_providers" {
+  cluster_name = aws_ecs_cluster.ecs_cluster.name
+  capacity_providers = var.capacity_providers
+}
+
 #--------------------------------------------
 # Deploy ECS Service
 #--------------------------------------------
