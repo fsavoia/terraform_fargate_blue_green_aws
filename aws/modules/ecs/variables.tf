@@ -6,7 +6,7 @@ variable "region" {
 
 variable "aws_lb_name" {
   type        = string
-  default     = "lb-sample-app"
+  default     = "lb-poc-app"
   description = "Define ALB name"
 }
 
@@ -55,13 +55,13 @@ variable "private_subnets" {
 
 variable "alb_tg_prod_name" {
   type        = string
-  default     = "tg-sample-app"
+  default     = "tg-poc-app"
   description = "Define ALB target group name from production traffic"
 }
 
 variable "alb_tg_test_name" {
   type        = string
-  default     = "tg-sample-app-test"
+  default     = "tg-poc-app-test"
   description = "Define ALB target group name from production traffic"
 }
 
@@ -96,7 +96,7 @@ variable "launch_type" {
 
 variable "ecs_service_name" {
   type        = string
-  default     = "poc-ecs-cluster-svc"
+  default     = "poc-ecs-svc"
   description = "Define ECS Service Name"
 }
 
@@ -108,7 +108,6 @@ variable "ecs_platform_version" {
 
 variable "image" {
   type        = string
-  default     = "652839185683.dkr.ecr.us-east-1.amazonaws.com/sample-app:latest"
   description = "Define Standard Task Definition image"
 }
 
@@ -120,7 +119,7 @@ variable "container_name" {
 
 variable "family" {
   type        = string
-  default     = "td-poc-app"
+  default     = "task-poc-app"
   description = "Define the task definition family name"
 }
 

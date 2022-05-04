@@ -1,3 +1,6 @@
+#--------------------------------------------
+# AWS ECR POC Configurations
+#--------------------------------------------
 resource "aws_ecr_repository" "ecr_repository" {
   name                 = var.ecr_name
   image_tag_mutability = var.ecr_tag_mutability
@@ -16,9 +19,10 @@ resource "aws_codedeploy_app" "codedeploy_ecs" {
 }
 
 resource "aws_codedeploy_deployment_group" "codedeploygroup_ecs" {
-  app_name              = aws_codedeploy_app.codedeploy_ecs.name
-  deployment_group_name = var.deployment_group_name
-  service_role_arn      = var.deployment_service_role
+  app_name               = aws_codedeploy_app.codedeploy_ecs.name
+  deployment_config_name = var.deployment_config_name
+  deployment_group_name  = var.deployment_group_name
+  service_role_arn       = aws_iam_role.cdrole.arn
 
   alarm_configuration {
     alarms                    = split(",", var.ecs_alarm_cpu_high_alarm_name)
@@ -77,14 +81,29 @@ resource "aws_codedeploy_deployment_group" "codedeploygroup_ecs" {
 #--------------------------------------------
 # AWS CodeBuild
 #--------------------------------------------
+# getting the current account ID
+data "aws_caller_identity" "current" {}
+locals {
+  account_id = data.aws_caller_identity.current.account_id
+}
+
+# getting terraform image
+data "aws_ecr_image" "service_image" {
+  repository_name = "terraform"
+  image_tag       = "latest"
+}
+locals {
+  terraform_image = data.aws_ecr_image.service_image
+}
+
 resource "aws_codebuild_project" "terraform" {
   count          = length(var.project_names)
   name           = element(var.project_names, count.index)
   service_role   = aws_iam_role.codebuild_role.arn
-  encryption_key = "arn:aws:kms:${var.region}:${var.account}:${var.encryption_key}"
+  encryption_key = "arn:aws:kms:${var.region}:${local.account_id}:${var.encryption_key}"
 
   environment {
-    image                       = var.environment_image
+    image                       = local.terraform_image
     compute_type                = var.environment_compute_type
     type                        = var.environment_type
     image_pull_credentials_type = var.environment_pull_type

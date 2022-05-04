@@ -28,13 +28,12 @@ resource "aws_s3_bucket_acl" "acl_poc" {
   acl    = "private"
 }
 
-#tfsec:ignore:aws-s3-encryption-customer-key
-resource "aws_s3_bucket_server_side_encryption_configuration" "encryption_poc" {
-  bucket = aws_s3_bucket.artifact_store.id
+resource "aws_s3_bucket_server_side_encryption_configuration" "poc_kms" {
+  bucket = aws_s3_bucket.artifact_store.bucket
 
   rule {
     apply_server_side_encryption_by_default {
-      sse_algorithm = "AES256"
+      sse_algorithm = "aws:kms"
     }
   }
 }

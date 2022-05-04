@@ -7,8 +7,8 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_up" {
   namespace         = "AWS/ECS"
 
   dimensions = {
-    "ClusterName" = var.ecs_cluster_name
-    "ServiceName" = var.ecs_service_name
+    "ClusterName" = aws_ecs_cluster.ecs_cluster.name
+    "ServiceName" = aws_ecs_service.service.name
   }
 
   comparison_operator = "GreaterThanThreshold"
@@ -31,8 +31,8 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_down" {
   namespace         = "AWS/ECS"
 
   dimensions = {
-    "ClusterName" = var.ecs_cluster_name
-    "ServiceName" = var.ecs_service_name
+    "ClusterName" = aws_ecs_cluster.ecs_cluster.name
+    "ServiceName" = aws_ecs_service.service.name
   }
 
   comparison_operator = "LessThanThreshold"
@@ -50,7 +50,7 @@ data "aws_caller_identity" "current" {}
 resource "aws_appautoscaling_target" "ecs_target" {
   min_capacity = var.scale_min_capacity
   max_capacity = var.scale_max_capacity
-  resource_id  = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
+  resource_id  = "service/${aws_ecs_cluster.ecs_cluster.name}/${aws_ecs_service.service.name}"
   role_arn = format(
     "arn:aws:iam::%s:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
     data.aws_caller_identity.current.account_id,
@@ -73,6 +73,10 @@ resource "aws_appautoscaling_policy" "policy_scale_down" {
     scale_in_cooldown  = var.scale_in_cooldown
     scale_out_cooldown = var.scale_out_cooldown
     target_value       = var.target_value
+
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
   }
 }
 
@@ -89,6 +93,10 @@ resource "aws_appautoscaling_policy" "policy_scale_up" {
     scale_in_cooldown  = var.scale_in_cooldown
     scale_out_cooldown = var.scale_out_cooldown
     target_value       = var.target_value
+    
+    predefined_metric_specification {
+      predefined_metric_type = "ECSServiceAverageCPUUtilization"
+    }
 
   }
 }

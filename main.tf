@@ -22,10 +22,11 @@ module "ec2" {
 #--------------------------------------------
 module "ecs" {
   source             = "./aws/modules/ecs"
+  image              = module.devops.ecr_repo_url
   security_group     = [module.network.aws_security_group]
   alb_security_group = module.network.aws_security_group
-  subnets            = [module.network.public_subnet_id]
-  private_subnets    = [module.network.private_subnet_id]
+  subnets            = module.network.public_subnet_id
+  private_subnets    = module.network.private_subnet_id
   vpc_id             = module.network.vpc_id
   ecr_repo_arns      = [module.devops.ecr_repo_arns]
 }

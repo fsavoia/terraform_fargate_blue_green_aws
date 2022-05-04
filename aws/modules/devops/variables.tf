@@ -4,17 +4,10 @@ variable "region" {
   description = "Define region target"
 }
 
-variable "account" {
-  type        = string
-  default     = "349396007468"
-  description = "Define account target"
-}
-
-# AWS ECR variables
 variable "ecr_name" {
   type        = string
   default     = "sample-app"
-  description = "Define ECR name"
+  description = "Define ECR name used by POC application registry"
 }
 
 variable "ecr_tag_mutability" {
@@ -54,16 +47,16 @@ variable "deployment_group_name" {
   description = "Define CodeDeploy Group Name"
 }
 
-variable "deployment_service_role" {
-  type        = string
-  default     = "arn:aws:iam::652839185683:role/CodeDeployRole"
-  description = "Define CodeDeploy Service Role"
-}
-
 variable "auto_rollback_events" {
   default     = ["DEPLOYMENT_FAILURE", "DEPLOYMENT_STOP_ON_ALARM"]
   type        = list(string)
   description = "The event type or types that trigger a rollback."
+}
+
+variable "deployment_config_name" {
+  default     = "CodeDeployDefault.ECSLinear10PercentEvery1Minutes"
+  type        = string
+  description = "The name of the group's deployment config. The default is CodeDeployDefault.OneAtATime"
 }
 
 variable "action_on_timeout" {
@@ -123,7 +116,7 @@ variable "encryption_key" {
 
 variable "environment_image" {
   type        = string
-  default     = "349396007468.dkr.ecr.us-east-1.amazonaws.com/terraform:latest"
+  default     = "652839185683.dkr.ecr.us-east-1.amazonaws.com/terraform"
   description = "The container image used by CodeBuild"
 }
 

@@ -11,11 +11,11 @@ output "aws_security_group" {
 }
 
 output "public_subnet_id" {
-  value = join("", aws_subnet.public[*].id)
+  value = aws_subnet.public[*].id
 }
 
 output "private_subnet_id" {
-  value = join("", aws_subnet.private[*].id)
+  value = aws_subnet.private[*].id
 }
 
 output "public_subnet_id_a" {

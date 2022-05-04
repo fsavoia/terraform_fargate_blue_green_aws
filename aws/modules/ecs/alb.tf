@@ -8,7 +8,8 @@ resource "aws_lb" "alb" {
   ip_address_type            = var.ip_address_type
   load_balancer_type         = var.load_balancer_type
   security_groups            = var.security_group
-  subnets                    = var.subnets
+  # subnets                    = ["${split(",",var.subnets)}"]
+  subnets = var.subnets
 }
 
 resource "aws_lb_listener" "http" {
