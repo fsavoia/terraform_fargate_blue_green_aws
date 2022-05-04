@@ -3,7 +3,6 @@
 #--------------------------------------------
 resource "aws_ecs_cluster" "ecs_cluster" {
   name               = var.ecs_cluster_name
-  capacity_providers = var.capacity_providers
 
   setting {
     name  = "containerInsights"
