@@ -23,7 +23,6 @@ resource "aws_ecs_service" "service" {
   enable_ecs_managed_tags            = true
   enable_execute_command             = false
   health_check_grace_period_seconds  = 0
-  iam_role                           = "aws-service-role"
   launch_type                        = var.launch_type
   platform_version                   = var.ecs_platform_version
   task_definition                    = "${aws_ecs_task_definition.main.family}:${max(
@@ -84,7 +83,8 @@ resource "aws_ecs_task_definition" "main" {
     ]
   )
   cpu                      = var.cpu
-  execution_role_arn       = "arn:aws:iam::652839185683:role/ecsTaskExecutionRole"
+  task_role_arn            = aws_iam_role.task_role.arn
+  execution_role_arn       = aws_iam_role.task_execution_role.arn
   family                   = var.family
   memory                   = var.memory
   network_mode             = var.network_mode

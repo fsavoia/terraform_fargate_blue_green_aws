@@ -1,12 +1,3 @@
-#--------------------------------------------
-# CodeCommit Repository
-#--------------------------------------------
-# resource "aws_codecommit_repository" "terraform" {
-#   repository_name = var.repo_name
-#   description     = var.repo_description
-#   default_branch  = var.default_branch
-# }
-
 resource "aws_ecr_repository" "ecr_repository" {
   name                 = var.ecr_name
   image_tag_mutability = var.ecr_tag_mutability

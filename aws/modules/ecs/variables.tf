@@ -171,3 +171,9 @@ variable "deployment_controller" {
   default     = "CODE_DEPLOY"
   description = "Deployment controller type"
 }
+
+variable "ecr_repo_arns" {
+  description = "The ARNs of the ECR repos.  By default, allows all repositories."
+  type        = list(string)
+  default     = ["*"]
+}

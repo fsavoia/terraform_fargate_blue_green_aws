@@ -10,24 +10,6 @@ variable "account" {
   description = "Define account target"
 }
 
-# AWS CodeCommit variables
-
-# variable "repo_name" {
-#   type        = string
-#   description = "Define repository name"
-# }
-
-# variable "repo_description" {
-#   type        = string
-#   description = "Define repository description"
-# }
-
-# variable "default_branch" {
-#   type        = string
-#   default     = "master"
-#   description = "Define repository default branch"
-# }
-
 # AWS ECR variables
 variable "ecr_name" {
   type        = string
