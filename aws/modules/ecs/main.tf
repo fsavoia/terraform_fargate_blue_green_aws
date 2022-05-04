@@ -30,6 +30,8 @@ resource "aws_ecs_service" "service" {
     data.aws_ecs_task_definition.main.revision,
   )}"
 
+  # This configuration below, set task definition to only allow updates from 
+  # AWS CodeDeploy via CICD
   deployment_controller {
     type = var.deployment_controller
   }
@@ -51,42 +53,4 @@ resource "aws_ecs_service" "service" {
 data "aws_ecs_task_definition" "main" {
   task_definition = aws_ecs_task_definition.main.family
   depends_on      = [aws_ecs_task_definition.main] # ensures at least one task def exists
-}
-
-#--------------------------------------------
-# Deploy ECS Task Definition
-#--------------------------------------------
-resource "aws_ecs_task_definition" "main" {
-  container_definitions = jsonencode(
-    [
-      {
-        image = var.image
-        logConfiguration = {
-          logDriver = "awslogs"
-          options = {
-            awslogs-group         = "/ecs/${var.family}"
-            awslogs-region        = var.region
-            awslogs-stream-prefix = "ecs"
-          }
-        }
-        memoryReservation = var.memory_reservation
-        name              = var.container_name
-        essential         = true
-        portMappings = [
-          {
-            containerPort = var.container_port
-            hostPort      = var.host_port
-            protocol      = "tcp"
-          }
-        ]
-      },
-    ]
-  )
-  cpu                      = var.cpu
-  task_role_arn            = aws_iam_role.task_role.arn
-  execution_role_arn       = aws_iam_role.task_execution_role.arn
-  family                   = var.family
-  memory                   = var.memory
-  network_mode             = var.network_mode
-  requires_compatibilities = var.requires_compatibilities
 }
