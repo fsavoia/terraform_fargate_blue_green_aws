@@ -73,7 +73,7 @@ resource "aws_security_group" "public" {
       to_port     = port.value
       protocol    = "tcp"
       cidr_blocks = ["${chomp(data.http.myip.body)}/32"]
-      description = "VIVO Home IP - fsavoia"
+      description = "My Outside Public IP"
     }
   }
 

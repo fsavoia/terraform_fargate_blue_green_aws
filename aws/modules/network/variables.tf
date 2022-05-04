@@ -1,5 +1,5 @@
 variable "name" {
-  default     = "awslab"
+  default     = "poc-ecs"
   description = "Define the name of the network"
 }
 
