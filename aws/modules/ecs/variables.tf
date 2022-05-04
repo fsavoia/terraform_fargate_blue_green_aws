@@ -196,12 +196,6 @@ variable "metric_name" {
   description = "Define the metric name for autoscale"
 }
 
-variable "threshold_scale_down" {
-  type        = number
-  default     = 45
-  description = "Define CPU threshold to scale up"
-}
-
 variable "scale_min_capacity" {
   type        = number
   default     = 1
