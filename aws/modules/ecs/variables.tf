@@ -177,3 +177,57 @@ variable "ecr_repo_arns" {
   type        = list(string)
   default     = ["*"]
 }
+
+variable "threshold_scale_up" {
+  type        = number
+  default     = 50
+  description = "Define CPU threshold to scale up"
+}
+
+variable "threshold_scale_down" {
+  type        = number
+  default     = 45
+  description = "Define CPU threshold to scale up"
+}
+
+variable "metric_name" {
+  type        = string
+  default     = "CPUUtilization"
+  description = "Define the metric name for autoscale"
+}
+
+variable "threshold_scale_down" {
+  type        = number
+  default     = 45
+  description = "Define CPU threshold to scale up"
+}
+
+variable "scale_min_capacity" {
+  type        = number
+  default     = 1
+  description = "Define min containers capacity for ECS Service Autoscale"
+}
+
+variable "scale_max_capacity" {
+  type        = number
+  default     = 2
+  description = "Define max containers capacity for ECS Service Autoscale"
+}
+
+variable "scale_in_cooldown" {
+  type        = number
+  default     = 300
+  description = "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start"
+}
+
+variable "scale_out_cooldown" {
+  type        = number
+  default     = 2
+  description = "The amount of time, in seconds, after a scale in activity completes before another scale in activity can start"
+}
+
+variable "target_value" {
+  type        = number
+  default     = 50
+  description = "Define the target value for the metric"
+}

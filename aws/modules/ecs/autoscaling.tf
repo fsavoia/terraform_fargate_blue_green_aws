@@ -14,10 +14,10 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_up" {
   comparison_operator = "GreaterThanThreshold"
   evaluation_periods  = 3
   datapoints_to_alarm = 3
-  metric_name         = "CPUUtilization"
+  metric_name         = var.metric_name
   period              = 60
   statistic           = "Average"
-  threshold           = 50
+  threshold           = var.threshold_scale_up
   treat_missing_data  = "missing"
   unit                = "Percent"
 }
@@ -37,10 +37,10 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_down" {
 
   comparison_operator = "LessThanThreshold"
   evaluation_periods  = 15
-  metric_name         = "CPUUtilization"
+  metric_name         = var.metric_name
   period              = 60
   statistic           = "Average"
-  threshold           = 45
+  threshold           = var.threshold_scale_down
   treat_missing_data  = "missing"
   unit                = "Percent"
 }
@@ -48,8 +48,8 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_down" {
 #Set up the target for autoscale in ECS service
 data "aws_caller_identity" "current" {}
 resource "aws_appautoscaling_target" "ecs_target" {
-  max_capacity       = 2
-  min_capacity       = 1
+  min_capacity       = var.scale_min_capacity
+  max_capacity       = var.scale_max_capacity
   resource_id        = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
   role_arn = format(
     "arn:aws:iam::%s:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
@@ -70,9 +70,9 @@ resource "aws_appautoscaling_policy" "policy_scale_down" {
 
   target_tracking_scaling_policy_configuration {
     disable_scale_in   = false
-    scale_in_cooldown  = 300
-    scale_out_cooldown = 300
-    target_value       = 50
+    scale_in_cooldown  = var.scale_in_cooldown
+    scale_out_cooldown = var.scale_out_cooldown
+    target_value       = var.target_value
   }
 }
 
@@ -86,9 +86,9 @@ resource "aws_appautoscaling_policy" "policy_scale_up" {
 
   target_tracking_scaling_policy_configuration {
     disable_scale_in   = false
-    scale_in_cooldown  = 300
-    scale_out_cooldown = 300
-    target_value       = 50
-    
+    scale_in_cooldown  = var.scale_in_cooldown
+    scale_out_cooldown = var.scale_out_cooldown
+    target_value       = var.target_value
+
   }
 }
