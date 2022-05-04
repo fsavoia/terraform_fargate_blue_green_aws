@@ -13,6 +13,7 @@ variable "account" {
 # AWS ECR variables
 variable "ecr_name" {
   type        = string
+  default     = "sample-app"
   description = "Define ECR name"
 }
 
@@ -40,7 +41,6 @@ variable "ecs_service_name" {
   type        = string
   description = "Define ECS Service name"
 }
-
 
 variable "deployment_name" {
   type        = string
@@ -138,7 +138,6 @@ variable "environment_type" {
   default     = "LINUX_CONTAINER"
   description = "The environment type used by CodeBuild"
 }
-
 
 variable "environment_pull_type" {
   type        = string
