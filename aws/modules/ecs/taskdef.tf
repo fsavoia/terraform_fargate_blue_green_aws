@@ -38,4 +38,8 @@ resource "aws_ecs_task_definition" "main" {
   memory                   = var.memory
   network_mode             = var.network_mode
   requires_compatibilities = var.requires_compatibilities
+
+  depends_on = [
+    aws_cloudwatch_log_group.ecs
+  ]
 }
