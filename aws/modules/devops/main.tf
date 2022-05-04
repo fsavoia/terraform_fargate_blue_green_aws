@@ -87,15 +87,6 @@ locals {
   account_id = data.aws_caller_identity.current.account_id
 }
 
-# getting terraform image
-data "aws_ecr_image" "service_image" {
-  repository_name = "terraform"
-  image_tag       = "latest"
-}
-locals {
-  terraform_image = data.aws_ecr_image.service_image
-}
-
 resource "aws_codebuild_project" "terraform" {
   count          = length(var.project_names)
   name           = element(var.project_names, count.index)
@@ -103,7 +94,7 @@ resource "aws_codebuild_project" "terraform" {
   encryption_key = "arn:aws:kms:${var.region}:${local.account_id}:${var.encryption_key}"
 
   environment {
-    image                       = local.terraform_image
+    image                       = "${local.account_id}.dkr.ecr.us-east-1.amazonaws.com/terraform:latest"
     compute_type                = var.environment_compute_type
     type                        = var.environment_type
     image_pull_credentials_type = var.environment_pull_type

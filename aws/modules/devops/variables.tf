@@ -114,12 +114,6 @@ variable "encryption_key" {
   description = "KMS key used by CodeBuild"
 }
 
-variable "environment_image" {
-  type        = string
-  default     = "652839185683.dkr.ecr.us-east-1.amazonaws.com/terraform"
-  description = "The container image used by CodeBuild"
-}
-
 variable "environment_compute_type" {
   type        = string
   default     = "BUILD_GENERAL1_SMALL"
