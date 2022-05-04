@@ -90,7 +90,7 @@ resource "aws_iam_role_policy" "task_execution_role_policy" {
 }
 
 resource "aws_iam_policy" "task_role_ecs_exec" {
-  name        = "${aws_iam_role.task_role.name}-ecs-exec"
+  name        = "${aws_iam_role.task_role.name}-policy"
   description = "Allow ECS Exec with Cloudwatch logging when attached to an ECS task role"
   policy      = join("", data.aws_iam_policy_document.task_role_ecs_exec.*.json)
 }
