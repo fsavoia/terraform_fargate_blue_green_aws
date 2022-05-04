@@ -48,9 +48,9 @@ resource "aws_cloudwatch_metric_alarm" "alarm_scale_down" {
 #Set up the target for autoscale in ECS service
 data "aws_caller_identity" "current" {}
 resource "aws_appautoscaling_target" "ecs_target" {
-  min_capacity       = var.scale_min_capacity
-  max_capacity       = var.scale_max_capacity
-  resource_id        = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
+  min_capacity = var.scale_min_capacity
+  max_capacity = var.scale_max_capacity
+  resource_id  = "service/${var.ecs_cluster_name}/${var.ecs_service_name}"
   role_arn = format(
     "arn:aws:iam::%s:role/aws-service-role/ecs.application-autoscaling.amazonaws.com/AWSServiceRoleForApplicationAutoScaling_ECSService",
     data.aws_caller_identity.current.account_id,

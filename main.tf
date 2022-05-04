@@ -21,13 +21,13 @@ module "ec2" {
 # Deploy ECS Configurations
 #--------------------------------------------
 module "ecs" {
-  source              = "./aws/modules/ecs"
-  security_group      = [module.network.aws_security_group]
-  alb_security_group  = module.network.aws_security_group
-  subnets             = [module.network.public_subnet_id]
-  private_subnets     = [module.network.private_subnet_id]
-  vpc_id              = module.network.vpc_id
-  ecr_repo_arns       = [module.devops.ecr_repo_arns]
+  source             = "./aws/modules/ecs"
+  security_group     = [module.network.aws_security_group]
+  alb_security_group = module.network.aws_security_group
+  subnets            = [module.network.public_subnet_id]
+  private_subnets    = [module.network.private_subnet_id]
+  vpc_id             = module.network.vpc_id
+  ecr_repo_arns      = [module.devops.ecr_repo_arns]
 }
 
 #--------------------------------------------
