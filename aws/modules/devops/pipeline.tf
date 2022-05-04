@@ -57,7 +57,7 @@ resource "aws_codepipeline" "codepipeline" {
       category = "Approval"
       configuration = {
         "CustomData"         = "tfsec errors found: #{TFSEC.checks_failed}"
-        "ExternalEntityLink" = "https://#{TFSEC.Region}.console.aws.amazon.com/codesuite/codebuild/652839185683/projects/#{TFSEC.BuildID}/build/#{TFSEC.BuildID}%3A#{TFSEC.BuildTag}/?region=#{TFSEC.Region}"
+        "ExternalEntityLink" = "https://#{TFSEC.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TFSEC.BuildID}/build/#{TFSEC.BuildID}%3A#{TFSEC.BuildTag}/?region=#{TFSEC.Region}"
       }
       name             = "Terraform_Security_Analysis_Manual_Review"
       output_artifacts = []
@@ -93,7 +93,7 @@ resource "aws_codepipeline" "codepipeline" {
       category = "Approval"
       configuration = {
         "CustomData"         = "Terraform plan review"
-        "ExternalEntityLink" = "https://#{TERRAFORM.Region}.console.aws.amazon.com/codesuite/codebuild/652839185683/projects/#{TERRAFORM.BuildID}/build/#{TERRAFORM.BuildID}%3A#{TERRAFORM.BuildTag}/?region=#{TERRAFORM.Region}"
+        "ExternalEntityLink" = "https://#{TERRAFORM.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TERRAFORM.BuildID}/build/#{TERRAFORM.BuildID}%3A#{TERRAFORM.BuildTag}/?region=#{TERRAFORM.Region}"
       }
       name      = "Terraform_Plan_Manual_Review"
       owner     = "AWS"

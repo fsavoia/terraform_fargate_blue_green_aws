@@ -81,12 +81,6 @@ resource "aws_codedeploy_deployment_group" "codedeploygroup_ecs" {
 #--------------------------------------------
 # AWS CodeBuild
 #--------------------------------------------
-# getting the current account ID
-data "aws_caller_identity" "current" {}
-locals {
-  account_id = data.aws_caller_identity.current.account_id
-}
-
 resource "aws_codebuild_project" "terraform" {
   count          = length(var.project_names)
   name           = element(var.project_names, count.index)
