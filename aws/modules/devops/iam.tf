@@ -25,7 +25,7 @@ data "aws_iam_policy_document" "role" {
 
 # IAM policy document used by CodeBuild
 resource "aws_iam_policy" "policy_document" {
-  name = "iam_policy_default"
+  name = "CodeBuild_iam_policy_default"
   policy = jsonencode({
     Version = "2012-10-17"
     Statement = [
@@ -87,7 +87,7 @@ data "aws_iam_policy_document" "CodePipeline_AssumeRole" {
 
 # IAM policy document used by CodePipeline
 resource "aws_iam_policy" "pipeline_policy_document" {
-  name = "iam_policy_default"
+  name = "CodePipeline_iam_policy_default"
   policy = jsonencode({
     "Statement" : [
       {
