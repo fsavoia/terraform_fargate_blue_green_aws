@@ -7,7 +7,7 @@ output "ecs_service_name" {
 }
 
 output "ecs_alarm_cpu_high_alarm_name" {
-  value = aws_cloudwatch_metric_alarm.high.alarm_name
+  value = aws_cloudwatch_metric_alarm.alarm_scale_up.alarm_name
 }
 
 output "aws_lb_listener_prod" {

@@ -78,7 +78,7 @@ variable "ecs_cluster_name" {
 
 variable "capacity_providers" {
   type        = list(string)
-  default = [ "FARGATE", "FARGATE_SPOT" ]
+  default     = ["FARGATE", "FARGATE_SPOT"]
   description = "Define Cluster Capacity Provider"
 }
 

@@ -139,8 +139,8 @@ resource "aws_codepipeline" "codepipeline" {
       category = "Deploy"
       configuration = {
         "ApplicationName"     = aws_codedeploy_app.codedeploy_ecs.name
-        "DeploymentGroupName" = aws_codedeploy_deployment_group.codedeploygroup_ecs.id      
-        }
+        "DeploymentGroupName" = aws_codedeploy_deployment_group.codedeploygroup_ecs.id
+      }
       input_artifacts = ["SourceArtifact"]
       name            = "Deploy"
       namespace       = "DeployVariables"
