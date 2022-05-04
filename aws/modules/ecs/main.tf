@@ -58,3 +58,8 @@ data "aws_ecs_task_definition" "main" {
   task_definition = aws_ecs_task_definition.main.family
   depends_on      = [aws_ecs_task_definition.main] # ensures at least one task def exists
 }
+
+# create log group to ecs
+resource "aws_cloudwatch_log_group" "ecs" {
+  name = "/ecs/${var.family}"
+}

@@ -33,9 +33,9 @@ resource "aws_instance" "public_instance" {
   user_data = <<EOF
   #!/bin/bash
   amazon-linux-extras install ansible2 -y && yum install git -y
-  sleep 10
+  sleep 30
   cd /etc/ansible && git clone https://github.com/fsavoia/ansible.git playbooks
-  sleep 10 && cd playbooks
+  sleep 120 && cd playbooks
   ansible-playbook jenkins-ec2.yml
 EOF
 
