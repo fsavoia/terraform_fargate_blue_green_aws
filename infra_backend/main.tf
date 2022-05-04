@@ -1,5 +1,4 @@
 # Create s3 bucket to store tfstate files 
-#tfsec:ignore:aws-s3-enable-bucket-logging
 resource "aws_s3_bucket" "tfstate-storage_poc" {
   bucket = var.bucket_name_poc
 
@@ -29,7 +28,6 @@ resource "aws_s3_bucket_acl" "acl_poc" {
   acl    = "private"
 }
 
-#tfsec:ignore:aws-s3-encryption-customer-key
 resource "aws_s3_bucket_server_side_encryption_configuration" "encryption_poc" {
   bucket = aws_s3_bucket.tfstate-storage_poc.id
 
@@ -41,9 +39,6 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "encryption_poc" {
 }
 
 # Create Dynamo table for lock file
-#tfsec:ignore:aws-dynamodb-enable-at-rest-encryption
-#tfsec:ignore:aws-dynamodb-enable-recovery
-#tfsec:ignore:aws-dynamodb-table-customer-key
 resource "aws_dynamodb_table" "dynamodb-terraform-state-lock_poc" {
   name           = var.dynamodb_table_name_poc
   hash_key       = "LockID"
