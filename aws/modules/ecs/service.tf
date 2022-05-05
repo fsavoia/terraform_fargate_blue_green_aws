@@ -1,7 +1,11 @@
+################# PLESE ATENTION ############################################
+# This ECS Service deployment below should only be updated via CodeDeploy
+# Changes via Terraform will not be allowed
+#############################################################################
+
 #--------------------------------------------
 # Deploy ECS Service
 #--------------------------------------------
-# Create a data source to pull the latest active revision from
 data "aws_ecs_task_definition" "main" {
   task_definition = aws_ecs_task_definition.main.family
   depends_on      = [aws_ecs_task_definition.main] # ensures at least one task def exists
@@ -37,4 +41,12 @@ resource "aws_ecs_service" "service" {
     security_groups  = [aws_security_group.ecs_service.id]
     subnets          = var.private_subnets
   }
+
+  lifecycle {
+    ignore_changes = [
+      load_balancer,
+      task_definition
+    ]
+  }
+
 }

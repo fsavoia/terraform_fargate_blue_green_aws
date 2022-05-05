@@ -43,8 +43,7 @@ resource "aws_codedeploy_deployment_group" "codedeploygroup_ecs" {
 
     target_group_pair_info {
       prod_traffic_route {
-        #listener_arns = split(",", var.aws_lb_listener_prod)
-        listener_arns = [var.aws_lb_listener_default]
+        listener_arns = split(",", var.aws_lb_listener_prod)
       }
 
       target_group {

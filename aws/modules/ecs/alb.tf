@@ -1,12 +1,6 @@
 #--------------------------------------------
 # Deploy ALB Configurations
 #--------------------------------------------
-data "aws_lb_listener" "default" {
-  load_balancer_arn = aws_lb.alb.arn
-  port              = 80
-  depends_on        = [aws_lb_listener.http]
-}
-
 resource "aws_lb" "alb" {
   name                       = var.aws_lb_name
   enable_deletion_protection = var.deletion_protection
@@ -17,6 +11,8 @@ resource "aws_lb" "alb" {
   subnets                    = var.subnets
 }
 
+#Listener prod
+#ignore_changes from target_group after deployment because of CodeDeploy BlueGreen
 resource "aws_lb_listener" "http" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 80
@@ -26,8 +22,17 @@ resource "aws_lb_listener" "http" {
     target_group_arn = aws_lb_target_group.tg_http.arn
     type             = "forward"
   }
+
+  lifecycle {
+    ignore_changes = [
+      default_action
+    ]
+  }
+
 }
 
+#Listener to test traffic
+#ignore_changes from target_group after deployment because of CodeDeploy BlueGreen
 resource "aws_lb_listener" "http_test" {
   load_balancer_arn = aws_lb.alb.arn
   port              = 8080
@@ -38,8 +43,15 @@ resource "aws_lb_listener" "http_test" {
     type             = "forward"
   }
 
+  lifecycle {
+    ignore_changes = [
+      default_action
+    ]
+  }
+
 }
 
+#target group prod
 resource "aws_lb_target_group" "tg_http" {
   deregistration_delay = "300"
   name                 = var.alb_tg_prod_name
@@ -62,7 +74,7 @@ resource "aws_lb_target_group" "tg_http" {
   }
 }
 
-
+#target group to test traffic
 resource "aws_lb_target_group" "tg_http_test" {
   deregistration_delay = "300"
   name                 = var.alb_tg_test_name

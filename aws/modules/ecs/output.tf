@@ -21,7 +21,3 @@ output "aws_lb_target_group_prod" {
 output "aws_lb_target_group_test" {
   value = aws_lb_target_group.tg_http_test.name
 }
-
-output "aws_lb_listener_default" {
-  value = data.aws_lb_listener.default.arn
-}

@@ -87,11 +87,6 @@ variable "aws_lb_listener_test" {
   description = "The test traffic listener ALB"
 }
 
-variable "aws_lb_listener_default" {
-  type        = string
-  description = "Get the default listener applied on ALB"
-}
-
 variable "aws_lb_target_group_prod" {
   type        = string
   description = "The target group name from production ALB"
