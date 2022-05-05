@@ -1,6 +1,7 @@
 ########################### PLEASE ATTENTION  ################################
 # This ECS Service deployment below should only be updated via CodeDeploy
-# Changes via Terraform will not be allowed
+# Deploy new TASK via Terraform will not be allowed
+# Blue/Green deployment is being used
 #############################################################################
 
 #--------------------------------------------
@@ -14,9 +15,9 @@ data "aws_ecs_task_definition" "main" {
 resource "aws_ecs_service" "service" {
   name                               = var.ecs_service_name
   cluster                            = aws_ecs_cluster.ecs_cluster.arn
-  deployment_maximum_percent         = 200
-  deployment_minimum_healthy_percent = 100
-  desired_count                      = 1
+  deployment_maximum_percent         = 200 # no need to change becausa of ASG
+  deployment_minimum_healthy_percent = 100 # no need to change becausa of ASG
+  desired_count                      = 1   # no need to change becausa of ASG
   enable_ecs_managed_tags            = true
   enable_execute_command             = false
   health_check_grace_period_seconds  = 0

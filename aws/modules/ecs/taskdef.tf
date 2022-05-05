@@ -1,6 +1,9 @@
 ########################### PLEASE ATTENTION  ################################
 # The task definition below should only be updated via CICD (CodeDeploy)
 # Changes via Terraform will not be allowed
+# Blue/Green deployment is being used
+#############################################################################
+# PLEASE - DO NOT MODIFY THIS FILE
 #############################################################################
 
 #--------------------------------------------
