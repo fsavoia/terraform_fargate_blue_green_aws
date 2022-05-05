@@ -38,9 +38,9 @@ module "devops" {
   source = "./aws/modules/devops"
   ecs_cluster_name              = module.ecs.ecs_cluster_name
   ecs_service_name              = module.ecs.ecs_service_name
-  ecs_alarm_cpu_high_alarm_name = module.ecs.ecs_alarm_cpu_high_alarm_name
   aws_lb_listener_prod          = module.ecs.aws_lb_listener_prod
   aws_lb_listener_test          = module.ecs.aws_lb_listener_test
   aws_lb_target_group_prod      = module.ecs.aws_lb_target_group_prod
   aws_lb_target_group_test      = module.ecs.aws_lb_target_group_test
+  aws_lb_listener_default       = module.ecs.aws_lb_listener_default
 }

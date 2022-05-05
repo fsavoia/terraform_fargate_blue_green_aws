@@ -6,10 +6,6 @@ output "ecs_service_name" {
   value = aws_ecs_service.service.name
 }
 
-output "ecs_alarm_cpu_high_alarm_name" {
-  value = aws_cloudwatch_metric_alarm.alarm_scale_up.alarm_name
-}
-
 output "aws_lb_listener_prod" {
   value = aws_lb_listener.http.arn
 }
@@ -24,4 +20,8 @@ output "aws_lb_target_group_prod" {
 
 output "aws_lb_target_group_test" {
   value = aws_lb_target_group.tg_http_test.name
+}
+
+output "aws_lb_listener_default" {
+  value = "${data.aws_lb_listener.default.arn}"
 }

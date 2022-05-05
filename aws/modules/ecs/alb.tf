@@ -1,6 +1,12 @@
 #--------------------------------------------
 # Deploy ALB Configurations
 #--------------------------------------------
+data "aws_lb_listener" "default" {
+  load_balancer_arn = aws_lb.alb.arn
+  port              = 80          
+  depends_on        = [aws_lb_listener.http]
+}
+
 resource "aws_lb" "alb" {
   name                       = var.aws_lb_name
   enable_deletion_protection = var.deletion_protection
@@ -8,8 +14,7 @@ resource "aws_lb" "alb" {
   ip_address_type            = var.ip_address_type
   load_balancer_type         = var.load_balancer_type
   security_groups            = var.security_group
-  # subnets                    = ["${split(",",var.subnets)}"]
-  subnets = var.subnets
+  subnets                    = var.subnets
 }
 
 resource "aws_lb_listener" "http" {

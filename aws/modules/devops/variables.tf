@@ -77,11 +77,6 @@ variable "termination_wait_time_in_minutes" {
   description = "The number of minutes to wait after a successful blue/green deployment before terminating instances from the original environment."
 }
 
-variable "ecs_alarm_cpu_high_alarm_name" {
-  type        = string
-  description = "The alarm for tracking deployment to automate rollback"
-}
-
 variable "aws_lb_listener_prod" {
   type        = string
   description = "The production listener ALB"
@@ -90,6 +85,11 @@ variable "aws_lb_listener_prod" {
 variable "aws_lb_listener_test" {
   type        = string
   description = "The test traffic listener ALB"
+}
+
+variable "aws_lb_listener_default" {
+  type =  string
+  description = "Get the default listener applied on ALB"
 }
 
 variable "aws_lb_target_group_prod" {
