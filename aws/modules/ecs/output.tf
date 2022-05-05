@@ -23,5 +23,5 @@ output "aws_lb_target_group_test" {
 }
 
 output "aws_lb_listener_default" {
-  value = "${data.aws_lb_listener.default.arn}"
+  value = data.aws_lb_listener.default.arn
 }

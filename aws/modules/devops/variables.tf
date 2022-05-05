@@ -88,7 +88,7 @@ variable "aws_lb_listener_test" {
 }
 
 variable "aws_lb_listener_default" {
-  type =  string
+  type        = string
   description = "Get the default listener applied on ALB"
 }
 

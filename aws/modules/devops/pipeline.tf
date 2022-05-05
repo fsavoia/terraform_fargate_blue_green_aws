@@ -152,12 +152,12 @@ resource "aws_codepipeline" "codepipeline" {
       version         = "1"
 
       configuration = {
-        "ApplicationName"     = aws_codedeploy_app.codedeploy_ecs.name
-        "DeploymentGroupName" = aws_codedeploy_deployment_group.codedeploygroup_ecs.deployment_group_name
+        "ApplicationName"              = aws_codedeploy_app.codedeploy_ecs.name
+        "DeploymentGroupName"          = aws_codedeploy_deployment_group.codedeploygroup_ecs.deployment_group_name
         TaskDefinitionTemplateArtifact = "SourceArtifact"
-        TaskDefinitionTemplatePath = "taskdef.json"
-        AppSpecTemplateArtifact = "SourceArtifact"
-        AppSpecTemplatePath = "appspec.yaml"
+        TaskDefinitionTemplatePath     = "taskdef.json"
+        AppSpecTemplateArtifact        = "SourceArtifact"
+        AppSpecTemplatePath            = "appspec.yaml"
       }
     }
   }

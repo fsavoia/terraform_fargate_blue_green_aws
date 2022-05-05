@@ -3,7 +3,7 @@
 #--------------------------------------------
 data "aws_lb_listener" "default" {
   load_balancer_arn = aws_lb.alb.arn
-  port              = 80          
+  port              = 80
   depends_on        = [aws_lb_listener.http]
 }
 
