@@ -1,4 +1,4 @@
-################# PLESE ATENTION ############################################
+########################### PLEASE ATTENTION  ################################
 # This ECS Service deployment below should only be updated via CodeDeploy
 # Changes via Terraform will not be allowed
 #############################################################################

@@ -1,10 +1,11 @@
+########################### PLEASE ATTENTION  ################################
+# The task definition below should only be updated via CICD (CodeDeploy)
+# Changes via Terraform will not be allowed
+#############################################################################
+
 #--------------------------------------------
 # Deploy ECS Task Definition
 #--------------------------------------------
-################# PLESE ATENTION ############################################
-# The task definition below should only be updated via CICD (via CodeDeploy)
-# Changes via Terraform will not be allowed
-#############################################################################
 resource "aws_ecs_task_definition" "main" {
   container_definitions = jsonencode(
     [
