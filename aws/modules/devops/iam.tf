@@ -19,9 +19,56 @@ resource "aws_iam_role" "cdrole" {
 EOF
 }
 
+#IAM attachment for AWSCodeDeployRoleForECS role
 resource "aws_iam_role_policy_attachment" "AWSCodeDeployRoleForECS" {
   policy_arn = "arn:aws:iam::aws:policy/AWSCodeDeployRoleForECS"
   role       = aws_iam_role.cdrole.name
+}
+
+
+#IAM Role for EventBridge to start CodePipeline
+resource "aws_iam_role" "cwe" {
+  name = "cwe-role-${var.region}-${aws_codepipeline.codepipeline.name}"
+
+  assume_role_policy = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Principal": {
+                "Service": "events.amazonaws.com"
+            },
+            "Action": "sts:AssumeRole"
+        }
+    ]
+}
+EOF
+}
+
+# IAM policy document used by EventBridge
+resource "aws_iam_policy" "cwe_document" {
+  name = "start-pipeline-execution-${var.region}-${aws_codepipeline.codepipeline.name}"
+  policy = jsonencode({
+    "Version" : "2012-10-17",
+    "Statement" : [
+      {
+        "Effect" : "Allow",
+        "Action" : [
+          "codepipeline:StartPipelineExecution"
+        ],
+        "Resource" : [
+          "${aws_codepipeline.codepipeline.arn}"
+        ]
+      }
+    ]
+  })
+}
+
+#IAM attachment for EventBridge role
+resource "aws_iam_role_policy_attachment" "cwe_attachment" {
+  policy_arn = aws_iam_policy.cwe_document.arn
+  role       = aws_iam_role.cwe.name
 }
 
 # IAM Role for CodeBuild

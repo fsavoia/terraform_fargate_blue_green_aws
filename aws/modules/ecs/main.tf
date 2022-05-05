@@ -29,10 +29,7 @@ resource "aws_ecs_service" "service" {
   health_check_grace_period_seconds  = 0
   launch_type                        = var.launch_type
   platform_version                   = var.ecs_platform_version
-  task_definition = "${aws_ecs_task_definition.main.family}:${max(
-    aws_ecs_task_definition.main.revision,
-    data.aws_ecs_task_definition.main.revision,
-  )}"
+  task_definition                    = "${aws_ecs_task_definition.main.family}:1"
 
   # This configuration below, set task definition to only allow updates from 
   # AWS CodeDeploy via CICD

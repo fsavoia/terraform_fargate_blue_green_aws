@@ -161,3 +161,9 @@ variable "s3_object_key" {
   default     = "sample-app.zip"
   description = "The S3 Object key for Application Artifact"
 }
+
+variable "eventbridge_rule_description" {
+  type        = string
+  default     = "Amazon CloudWatch Events rule to automatically start your pipeline when a change occurs in the Amazon S3 object key or S3 folder. Deleting this may prevent changes from being detected in that pipeline. Read more: http://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-about-starting.html"
+  description = "CodePipeline EventBridge role description"
+}
