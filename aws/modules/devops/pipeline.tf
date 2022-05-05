@@ -14,12 +14,7 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Source"
 
     action {
-      category = "Source"
-      configuration = {
-        "PollForSourceChanges" = "false"
-        "S3Bucket"             = aws_s3_bucket.artifact_store.bucket
-        "S3ObjectKey"          = var.s3_object_key
-      }
+      category         = "Source"
       name             = "Source"
       namespace        = "SourceVariables"
       output_artifacts = ["SourceArtifact"]
@@ -28,6 +23,12 @@ resource "aws_codepipeline" "codepipeline" {
       region           = var.region
       run_order        = 1
       version          = "1"
+
+      configuration = {
+        "PollForSourceChanges" = "false"
+        "S3Bucket"             = aws_s3_bucket.artifact_store.bucket
+        "S3ObjectKey"          = var.s3_object_key
+      }
     }
   }
 
@@ -35,10 +36,7 @@ resource "aws_codepipeline" "codepipeline" {
     name = "tfsec_check"
 
     action {
-      category = "Build"
-      configuration = {
-        "ProjectName" = "tfsec"
-      }
+      category        = "Build"
       input_artifacts = ["SourceArtifact"]
       name            = "tfec_security"
       namespace       = "TFSEC"
@@ -47,6 +45,10 @@ resource "aws_codepipeline" "codepipeline" {
       region          = var.region
       run_order       = 1
       version         = "1"
+
+      configuration = {
+        "ProjectName" = "tfsec"
+      }
     }
   }
 
@@ -54,11 +56,7 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Terraform_Security"
 
     action {
-      category = "Approval"
-      configuration = {
-        "CustomData"         = "tfsec errors found: #{TFSEC.checks_failed}"
-        "ExternalEntityLink" = "https://#{TFSEC.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TFSEC.BuildID}/build/#{TFSEC.BuildID}%3A#{TFSEC.BuildTag}/?region=#{TFSEC.Region}"
-      }
+      category         = "Approval"
       name             = "Terraform_Security_Analysis_Manual_Review"
       output_artifacts = []
       owner            = "AWS"
@@ -66,6 +64,11 @@ resource "aws_codepipeline" "codepipeline" {
       region           = var.region
       run_order        = 1
       version          = "1"
+
+      configuration = {
+        "CustomData"         = "tfsec errors found: #{TFSEC.checks_failed}"
+        "ExternalEntityLink" = "https://#{TFSEC.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TFSEC.BuildID}/build/#{TFSEC.BuildID}%3A#{TFSEC.BuildTag}/?region=#{TFSEC.Region}"
+      }
     }
   }
   stage {
@@ -90,17 +93,18 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Terraform_Plan_Manual_Review"
 
     action {
-      category = "Approval"
-      configuration = {
-        "CustomData"         = "Terraform plan review"
-        "ExternalEntityLink" = "https://#{TERRAFORM.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TERRAFORM.BuildID}/build/#{TERRAFORM.BuildID}%3A#{TERRAFORM.BuildTag}/?region=#{TERRAFORM.Region}"
-      }
+      category  = "Approval"
       name      = "Terraform_Plan_Manual_Review"
       owner     = "AWS"
       provider  = "Manual"
       region    = var.region
       run_order = 1
       version   = "1"
+
+      configuration = {
+        "CustomData"         = "Terraform plan review"
+        "ExternalEntityLink" = "https://#{TERRAFORM.Region}.console.aws.amazon.com/codesuite/codebuild/${local.account_id}/projects/#{TERRAFORM.BuildID}/build/#{TERRAFORM.BuildID}%3A#{TERRAFORM.BuildTag}/?region=#{TERRAFORM.Region}"
+      }
     }
   }
   stage {
@@ -124,31 +128,37 @@ resource "aws_codepipeline" "codepipeline" {
     name = "Deploy"
 
     action {
-      category = "Approval"
-      configuration = {
-        "CustomData" = "Do you want to deploy application pro Prod?"
-      }
+      category  = "Approval"
       name      = "DeployToProd"
       owner     = "AWS"
       provider  = "Manual"
       region    = var.region
       run_order = 1
       version   = "1"
+
+      configuration = {
+        "CustomData" = "Do you want to deploy application pro Prod?"
+      }
     }
     action {
-      category = "Deploy"
-      configuration = {
-        "ApplicationName"     = aws_codedeploy_app.codedeploy_ecs.name
-        "DeploymentGroupName" = aws_codedeploy_deployment_group.codedeploygroup_ecs.deployment_group_name
-      }
-      input_artifacts = ["SourceArtifact"]
       name            = "Deploy"
+      category        = "Deploy"
+      input_artifacts = ["SourceArtifact"]
       namespace       = "DeployVariables"
       owner           = "AWS"
-      provider        = "CodeDeploy"
+      provider        = "CodeDeployToECS"
       region          = var.region
       run_order       = 2
       version         = "1"
+
+      configuration = {
+        "ApplicationName"     = aws_codedeploy_app.codedeploy_ecs.name
+        "DeploymentGroupName" = aws_codedeploy_deployment_group.codedeploygroup_ecs.deployment_group_name
+        TaskDefinitionTemplateArtifact = "SourceArtifact"
+        TaskDefinitionTemplatePath = "taskdef.json"
+        AppSpecTemplateArtifact = "SourceArtifact"
+        AppSpecTemplatePath = "appspec.yaml"
+      }
     }
   }
 
