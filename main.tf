@@ -3,6 +3,12 @@
 #--------------------------------------------
 module "network" {
   source = "./modules/network"
+
+  availability_zones        = var.availability_zones
+  name                      = var.vpc_name
+  vpc_cidr_block            = var.vpc_cidr_block
+  public_subnet_cidr_block  = var.public_subnet_cidr_block
+  private_subnet_cidr_block = var.private_subnet_cidr_block
 }
 
 #--------------------------------------------
@@ -21,7 +27,8 @@ module "ec2" {
 # Deploy ECS Configurations
 #--------------------------------------------
 module "ecs" {
-  source             = "./modules/ecs"
+  source = "./modules/ecs"
+
   image              = module.devops.ecr_repo_url
   security_group     = [module.network.aws_security_group]
   alb_security_group = module.network.aws_security_group
@@ -35,7 +42,8 @@ module "ecs" {
 # Deploy DevOps Configurations
 #--------------------------------------------
 module "devops" {
-  source                   = "./modules/devops"
+  source = "./modules/devops"
+
   ecs_cluster_name         = module.ecs.ecs_cluster_name
   ecs_service_name         = module.ecs.ecs_service_name
   aws_lb_listener_prod     = module.ecs.aws_lb_listener_prod
