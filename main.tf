@@ -2,14 +2,14 @@
 # Deploy VPC Configurations
 #--------------------------------------------
 module "network" {
-  source = "./aws/modules/network"
+  source = "./modules/network"
 }
 
 #--------------------------------------------
 # Deploy EC2 Configurations
 #--------------------------------------------
 module "ec2" {
-  source = "./aws/modules/ec2"
+  source = "./modules/ec2"
 
   name               = var.name
   instance_type      = var.instance_type
@@ -21,7 +21,7 @@ module "ec2" {
 # Deploy ECS Configurations
 #--------------------------------------------
 module "ecs" {
-  source             = "./aws/modules/ecs"
+  source             = "./modules/ecs"
   image              = module.devops.ecr_repo_url
   security_group     = [module.network.aws_security_group]
   alb_security_group = module.network.aws_security_group
@@ -35,11 +35,11 @@ module "ecs" {
 # Deploy DevOps Configurations
 #--------------------------------------------
 module "devops" {
-  source = "./aws/modules/devops"
-  ecs_cluster_name              = module.ecs.ecs_cluster_name
-  ecs_service_name              = module.ecs.ecs_service_name
-  aws_lb_listener_prod          = module.ecs.aws_lb_listener_prod
-  aws_lb_listener_test          = module.ecs.aws_lb_listener_test
-  aws_lb_target_group_prod      = module.ecs.aws_lb_target_group_prod
-  aws_lb_target_group_test      = module.ecs.aws_lb_target_group_test
+  source                   = "./modules/devops"
+  ecs_cluster_name         = module.ecs.ecs_cluster_name
+  ecs_service_name         = module.ecs.ecs_service_name
+  aws_lb_listener_prod     = module.ecs.aws_lb_listener_prod
+  aws_lb_listener_test     = module.ecs.aws_lb_listener_test
+  aws_lb_target_group_prod = module.ecs.aws_lb_target_group_prod
+  aws_lb_target_group_test = module.ecs.aws_lb_target_group_test
 }

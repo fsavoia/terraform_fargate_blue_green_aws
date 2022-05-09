@@ -48,7 +48,7 @@ If you will use remote backend (recommended), please, you have to configure the 
 backend.tf
 ```
 
-If you want an example about how to create your remote backend infrastructure, go to "infra_backend" directory and replace variables.tf file with your data and follow the steps below
+If you want an example about how to create your remote backend infrastructure, go to [infra_backend](infra_backend) directory and replace [variables.tf](infra_backend/variables.tf) file with your data and follow the steps below
 
 ```shell script
 export AWS_REGION=<ENTER YOUR REGION>   # Select your own region
