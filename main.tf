@@ -36,6 +36,8 @@ module "ecs" {
   private_subnets    = module.network.private_subnet_id
   vpc_id             = module.network.vpc_id
   ecr_repo_arns      = [module.devops.ecr_repo_arns]
+  scale_min_capacity = var.scale_min_capacity
+  scale_max_capacity = var.scale_max_capacity
 }
 
 #--------------------------------------------

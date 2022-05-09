@@ -141,6 +141,8 @@ terraform destroy --auto-approve
 | <a name="public_subnet_cidr_block"></a> [public_subnet_cidr_block](./variables.tf) | The public subnet CIDR bock | `list(string)` | `["10.10.0.0/24", "10.10.1.0/24", "10.10.2.0/24"]` | no |
 | <a name="private_subnet_cidr_block"></a> [private_subnet_cidr_block](./variables.tf) | The private subnet CIDR bock | `list(string)` | `["10.10.3.0/24", "10.10.4.0/24", "10.10.5.0/24"]` | no |
 | <a name="vpc_name"></a> [vpc_name](./variables.tf) | The VPC name | `string` | `"poc-ecs"` | no |
+| <a name="scale_min_capacity"></a> [scale_min_capacity](./variables.tf) | Define min containers capacity for ECS Service Autoscale | `number` | `1` | no |
+| <a name="scale_max_capacity"></a> [scale_max_capacity](./variables.tf) | Define max containers capacity for ECS Service Autoscale| `number` | `2` | no |
 
 ## Outputs
 

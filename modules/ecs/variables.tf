@@ -197,13 +197,11 @@ variable "metric_name" {
 
 variable "scale_min_capacity" {
   type        = number
-  default     = 1
   description = "Define min containers capacity for ECS Service Autoscale"
 }
 
 variable "scale_max_capacity" {
   type        = number
-  default     = 2
   description = "Define max containers capacity for ECS Service Autoscale"
 }
 
