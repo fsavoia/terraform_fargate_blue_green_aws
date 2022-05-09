@@ -23,6 +23,7 @@ variable "availability_zones" {
 }
 
 variable "vpc_cidr_block" {
+  type        = string  
   default     = "10.10.0.0/16"
   description = "Define VPC CIDR block"
 }
@@ -39,6 +40,7 @@ variable "private_subnet_cidr_block" {
   description = "Define private subnet CIDRs"
 }
 variable "vpc_name" {
+  type        = string
   default     = "poc-ecs"
   description = "Define the name of the network"
 }

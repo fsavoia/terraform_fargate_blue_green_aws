@@ -113,35 +113,41 @@ terraform destroy --auto-approve
 
 | Name | Version |
 |------|---------|
-| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 1.0.0 |
-| <a name="requirement_aws"></a> [aws](#requirement\_aws) | >= 3.72 |
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 4.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | >= 3.72 |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.0  |
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_aws_vpc"></a> [aws\_vpc](#module\_aws\_vpc) | terraform-aws-modules/vpc/aws | ~> 3.0 |
-| <a name="module_eks_blueprints"></a> [eks\_blueprints](#module\_eks\_blueprints) | ../.. | n/a |
-| <a name="module_eks_blueprints_kubernetes_addons"></a> [eks\_blueprints_kubernetes_addons](#module\_eks\_blueprints_kubernetes_addons) | ../.. | n/a |
+| <a name="module_network"></a> [network](modules/network) | modules/network | n/a |
+| <a name="module_ec2"></a> [ec2](modules/ec2) | modules/ec2 | n/a |
+| <a name="module_devops"></a> [devops](modules/devops) | modules/devops | n/a |
+| <a name="module_ecs"></a> [ecs](modules/ecs) | modules/ecs | n/a |
 
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="input_environment"></a> [environment](#input\_environment) | Environment area, e.g. prod or preprod | `string` | `"preprod"` | no |
-| <a name="input_tenant"></a> [tenant](#input\_tenant) | Account Name or unique account unique id e.g., apps or management or aws007 | `string` | `"aws001"` | no |
-| <a name="input_zone"></a> [zone](#input\_zone) | zone, e.g. dev or qa or load or ops etc... | `string` | `"dev"` | no |
+| <a name="availability_zones"></a> [availability_zones](./variables.tf) | Availability Zones names | `list(string)` | `["us-east-1a", "us-east-1b", "us-east-1c"]` | no |
+| <a name="vpc_cidr_block"></a> [vpc_cidr_block](./variables.tf) | The VPC CIDR block | `string` | `"10.10.0.0/16"` | no |
+| <a name="public_subnet_cidr_block"></a> [public_subnet_cidr_block](./variables.tf) | The public subnet CIDR bock | `list(string)` | `["10.10.0.0/24", "10.10.1.0/24", "10.10.2.0/24"]` | no |
+| <a name="private_subnet_cidr_block"></a> [private_subnet_cidr_block](./variables.tf) | The private subnet CIDR bock | `list(string)` | `["10.10.3.0/24", "10.10.4.0/24", "10.10.5.0/24"]` | no |
+| <a name="vpc_name"></a> [vpc_name](./variables.tf) | The VPC name | `string` | `"poc-ecs"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="output_configure_kubectl"></a> [configure\_kubectl](#output\_configure\_kubectl) | Configure kubectl: make sure you're logged in with the correct AWS profile and run the following command to update your kubeconfig |
+| <a name="vpc_id"></a> [vpc_id](modules/network/output.tf) | The VPC ID |
+| <a name="aws_public_security_group_id"></a> [aws_public_security_group_id](modules/network/output.tf) | The public security group IDs |
+| <a name="public_subnet_ids"></a> [public_subnet_ids](modules/network/output.tf) | The public subnet IDs |
+| <a name="private_subnet_ids"></a> [private_subnet_ids](modules/network/output.tf) | The private subnet IDs |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
