@@ -34,3 +34,8 @@ variable "public_ports" {
   default     = [80, 443, 8080]
   description = "Define ports for public SG"
 }
+
+variable "private_subnet_cidr_block_2" {
+  type        = list(string)
+  description = "Define private subnet CIDRs"
+}

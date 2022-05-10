@@ -13,3 +13,11 @@ output "public_subnet_ids" {
 output "private_subnet_ids" {
   value = module.network.private_subnet_id
 }
+
+output "ecr_repository_arn" {
+  value = aws_ecr_repository.ecr_repo.arn
+}
+
+output "private_subnet_id_2" {
+  value = module.network.private_subnet_id_2
+}

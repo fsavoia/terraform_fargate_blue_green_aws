@@ -1,3 +1,6 @@
+############################################
+# VPC configuration                     #
+############################################
 resource "aws_vpc" "main" {
   cidr_block           = var.vpc_cidr_block
   instance_tenancy     = "default"
@@ -7,6 +10,11 @@ resource "aws_vpc" "main" {
   tags = {
     Name = "${var.name}-vpc"
   }
+}
+
+resource "aws_vpc_ipv4_cidr_block_association" "secondary_cidr" {
+  vpc_id     = aws_vpc.main.id
+  cidr_block = "100.70.0.0/16"
 }
 
 ############################################
@@ -22,7 +30,9 @@ resource "aws_subnet" "public" {
   map_public_ip_on_launch = true
 
   tags = {
-    Name = "${var.name}-${element(var.availability_zones, count.index)}-public"
+    Name                                = "${var.name}-${element(var.availability_zones, count.index)}-public"
+    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/role/elb"            = "1"
   }
 }
 
@@ -109,12 +119,28 @@ resource "aws_subnet" "private" {
   map_public_ip_on_launch = false
 
   tags = {
-    Name = "${var.name}-${element(var.availability_zones, count.index)}-private"
+    Name                                = "${var.name}-${element(var.availability_zones, count.index)}-private"
+    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/role/elb"            = "1"
+  }
+}
+
+resource "aws_subnet" "private_sec" {
+  vpc_id                  = aws_vpc_ipv4_cidr_block_association.secondary_cidr.vpc_id
+  count                   = length(var.private_subnet_cidr_block_2)
+  cidr_block              = element(var.private_subnet_cidr_block_2, count.index)
+  availability_zone       = element(var.availability_zones, count.index)
+  map_public_ip_on_launch = false
+
+  tags = {
+    Name                                = "${var.name}-${element(var.availability_zones, count.index)}-pods"
+    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/role/elb"            = "1"
   }
 }
 
 resource "aws_eip" "nat_eip" {
-  vpc = true
+  vpc        = true
   depends_on = [aws_internet_gateway.ig]
 }
 
@@ -146,6 +172,12 @@ resource "aws_route_table" "private" {
 resource "aws_route_table_association" "private" {
   count          = length(var.private_subnet_cidr_block)
   subnet_id      = element(aws_subnet.private.*.id, count.index)
+  route_table_id = aws_route_table.private.id
+}
+
+resource "aws_route_table_association" "pods" {
+  count          = length(var.private_subnet_cidr_block_2)
+  subnet_id      = element(aws_subnet.private_sec.*.id, count.index)
   route_table_id = aws_route_table.private.id
 }
 

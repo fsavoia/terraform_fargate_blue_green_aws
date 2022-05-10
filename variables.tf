@@ -1,29 +1,14 @@
 #--------------------------------------------
-# Variables to deploy EC2 module
-#--------------------------------------------
-variable "instance_type" {
-  type        = string
-  default     = "jenkins-lab"
-  description = "Define EC2 instance type"
-}
-
-variable "name" {
-  type        = string
-  description = "Define EC2 TAG name"
-  default     = "t2.medium"
-}
-
-#--------------------------------------------
 # Variables to deploy Network module
 #--------------------------------------------
 variable "availability_zones" {
   type        = list(string)
-  default     = ["us-east-1a", "us-east-1b", "us-east-1c"]
+  default     = ["sa-east-1a", "sa-east-1b", "sa-east-1c"]
   description = "Define subnets AZs"
 }
 
 variable "vpc_cidr_block" {
-  type        = string  
+  type        = string
   default     = "10.10.0.0/16"
   description = "Define VPC CIDR block"
 }
@@ -45,17 +30,8 @@ variable "vpc_name" {
   description = "Define the name of the network"
 }
 
-#--------------------------------------------
-# Variables to deploy ECS module
-#--------------------------------------------
-variable "scale_min_capacity" {
-  type        = number
-  default     = 1
-  description = "Define min containers capacity for ECS Service Autoscale"
-}
-
-variable "scale_max_capacity" {
-  type        = number
-  default     = 2
-  description = "Define max containers capacity for ECS Service Autoscale"
+variable "private_subnet_cidr_block_2" {
+  type        = list(string)
+  default     = ["100.70.5.0/25", "100.70.5.128/26", "100.70.5.192/26"]
+  description = "Define private subnet CIDRs"
 }
