@@ -31,21 +31,9 @@ variable "ssm_attachment" {
   description = "Define the name of SSM policy attachment"
 }
 
-variable "codepipeline_attachment" {
-  type        = string
-  default     = "codepipeline_attachment"
-  description = "Define the name of Codepipeline policy attachment"
-}
-
 variable "ecr_attachment" {
   type        = string
   default     = "ecr_attachment"
-  description = "Define the name of ECR policy attachment"
-}
-
-variable "s3_attachment" {
-  type        = string
-  default     = "s3_attachment"
   description = "Define the name of ECR policy attachment"
 }
 
