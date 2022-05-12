@@ -1,4 +1,4 @@
-# Fargate with Blue Green Deployment using Jenkins, AWS CodePipeline, AWS CodeBuid and AWS CodeDeploy
+# Fargate with Blue Green Deployment using Jenkins AWS CodeDeploy
 
 This example deploys a fully ECS Cluster with FARGATE mode. It creates all the necessary infrastructure, such as the VPC, Application Load Balancer and the necessary Roles in 3 availability zones.
 
@@ -13,29 +13,9 @@ This example creates a Jenkins server on EC2. You should connect to http://<PUBL
 
 ### CI/CD
 
-All deployment steps is done through a Pipeline using Jenkins for CI, CodePipeline, CodeBuild and CodeDeploy. In this example, the Terraform flow it's executed via AWS Codebuild before application deployment.
+* to-do
 
-![hybrid_pipeline](images/hyrbrid_devops_aws.jpeg)
-
-### tfsec
-
-During the pipeline execution, we can check the security checks pased to our tfsec configuration 
-
-![tfsec_output](images/tfsec_output.png)
-
-This configuration is running inside of an AWS Codebuild Container ith the configuration stated at [buildspec_tfsec](https://github.com/fsavoia/amazon-ecs-demo-with-node-express/blob/main/terraform/buildspec_tfsec.yaml). We highly recommend you to check the [tfsec documentation](https://tfsec.dev/docs/aws/home/) to review the configuration and modify as you need.
-
-Besides this output, AWS Codebuild also exports the result of tfsec report on the Codebuild reports section
-
-![tfsec_output_report](images/tfsec_report.png)
-
-Our pipeline have several manual process:
-- Manual process to review the security checks passed via tfsec.
-- Manual process to review the Terraform plan output.
-
-![terraform_pipeline](images/terraform_pipeline.png)
-
-## to-do
+## Terraform to-do
 * Terraform: IAM policies more restrictive
 
 ## How to Deploy
@@ -56,7 +36,6 @@ terraform init
 terraform plan
 terraform apply
 ```
-
 
 Ensure that you have installed the following tools in your Mac or Windows Laptop before start working with this module and run Terraform Plan and Apply
 
