@@ -1,9 +1,3 @@
-variable "region" {
-  type        = string
-  default     = "us-east-1"
-  description = "Define region target"
-}
-
 variable "aws_lb_name" {
   type        = string
   default     = "lb-poc-app"

@@ -16,7 +16,7 @@ This example creates a Jenkins server on EC2. You should connect to http://<PUBL
 * to-do
 
 ## Terraform to-do
-* Terraform: IAM policies more restrictive
+* Terraform: IAM policies for Jenkins more restrictive (with specific resources)
 
 ## How to Deploy
 

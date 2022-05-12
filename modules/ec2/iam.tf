@@ -38,23 +38,9 @@ resource "aws_iam_policy_attachment" "ecr_policy_role" {
   policy_arn = var.ecr_policy_arn
 }
 
-#Attach S3 policy to Role
-resource "aws_iam_policy_attachment" "s3_policy_role" {
-  name       = var.s3_attachment
-  roles      = [aws_iam_role.ec2_role.name]
-  policy_arn = var.s3_policy_arn
-}
-
 #Attach ECS policy to Role
 resource "aws_iam_policy_attachment" "ecs_policy_role" {
   name       = var.ecs_attachment
   roles      = [aws_iam_role.ec2_role.name]
   policy_arn = var.ecs_policy_arn
-}
-
-#Attach CodePipeline policy to role
-resource "aws_iam_policy_attachment" "codepipeline_policy_role" {
-  name       = var.codepipeline_attachment
-  roles      = [aws_iam_role.ec2_role.name]
-  policy_arn = var.codepipeline_policy_arn
 }

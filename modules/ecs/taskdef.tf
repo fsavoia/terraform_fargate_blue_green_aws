@@ -2,13 +2,11 @@
 # The task definition below should only be updated via CICD (CodeDeploy)
 # Changes via Terraform will not be allowed
 # Blue/Green deployment is being used
-#############################################################################
-# PLEASE - DO NOT MODIFY THIS FILE
-#############################################################################
+#-----------------------------------------------------------------------------
+# PLEASE - DO NOT MODIFY THIS FILE AFTER DEPLOYMENT
+#-----------------------------------------------------------------------------
+data "aws_region" "current" {}
 
-#--------------------------------------------
-# Deploy ECS Task Definition
-#--------------------------------------------
 resource "aws_ecs_task_definition" "main" {
   container_definitions = jsonencode(
     [
@@ -18,7 +16,7 @@ resource "aws_ecs_task_definition" "main" {
           logDriver = "awslogs"
           options = {
             awslogs-group         = "/ecs/${var.family}"
-            awslogs-region        = var.region
+            awslogs-region        = data.aws_region.current.name
             awslogs-stream-prefix = "ecs"
           }
         }

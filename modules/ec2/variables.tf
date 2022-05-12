@@ -67,22 +67,10 @@ variable "ssm_policy_arn" {
   description = "Define ARN for AmazonEC2RoleforSSM AWS managed policy"
 }
 
-variable "codepipeline_policy_arn" {
-  type        = string
-  default     = "arn:aws:iam::aws:policy/AWSCodePipelineCustomActionAccess"
-  description = "Define ARN for AWSCodePipelineCustomActionAccess AWS managed policy"
-}
-
 variable "ecr_policy_arn" {
   type        = string
   default     = "arn:aws:iam::aws:policy/EC2InstanceProfileForImageBuilderECRContainerBuilds"
   description = "Define ARN for EC2InstanceProfileForImageBuilderECRContainerBuilds AWS managed policy"
-}
-
-variable "s3_policy_arn" {
-  type        = string
-  default     = "arn:aws:iam::aws:policy/AmazonS3FullAccess"
-  description = "Define ARN for AmazonS3FullAccess AWS managed policy"
 }
 
 variable "ecs_policy_arn" {
