@@ -3,14 +3,14 @@
 #--------------------------------------------
 variable "instance_type" {
   type        = string
-  default     = "jenkins-lab"
+  default     = "t2.medium"
   description = "Define EC2 instance type"
 }
 
 variable "name" {
   type        = string
   description = "Define EC2 TAG name"
-  default     = "t2.medium"
+  default     = "jenkins-lab"
 }
 
 #--------------------------------------------
