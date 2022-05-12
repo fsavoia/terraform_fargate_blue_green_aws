@@ -1,4 +1,4 @@
-# Fargate with Blue Green Deployment using Jenkins AWS CodeDeploy
+# Fargate with Blue Green Deployment using Jenkins and AWS CodeDeploy
 
 This example deploys a fully ECS Cluster with FARGATE mode. It creates all the necessary infrastructure, such as the VPC, Application Load Balancer and the necessary Roles in 3 availability zones.
 
