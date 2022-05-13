@@ -31,7 +31,7 @@ resource "aws_subnet" "public" {
 
   tags = {
     Name                                = "${var.name}-${element(var.availability_zones, count.index)}-public"
-    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/cluster/btg-cluster" = "shared"
     "kubernetes.io/role/elb"            = "1"
   }
 }
@@ -120,7 +120,7 @@ resource "aws_subnet" "private" {
 
   tags = {
     Name                                = "${var.name}-${element(var.availability_zones, count.index)}-private"
-    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/cluster/btg-cluster" = "shared"
     "kubernetes.io/role/elb"            = "1"
   }
 }
