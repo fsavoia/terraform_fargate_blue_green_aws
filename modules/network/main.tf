@@ -122,6 +122,7 @@ resource "aws_subnet" "private" {
     Name                                = "${var.name}-${element(var.availability_zones, count.index)}-private"
     "kubernetes.io/cluster/btg-cluster" = "shared"
     "kubernetes.io/role/elb"            = "1"
+    "karpenter.sh/discovery"            = "btg-cluster"
   }
 }
 
@@ -134,8 +135,9 @@ resource "aws_subnet" "private_sec" {
 
   tags = {
     Name                                = "${var.name}-${element(var.availability_zones, count.index)}-pods"
-    "kubernetes.io/cluster/eks-poc-btg" = "shared"
+    "kubernetes.io/cluster/btg-cluster" = "shared"
     "kubernetes.io/role/elb"            = "1"
+    "karpenter.sh/discovery"            = "btg-cluster"
   }
 }
 
