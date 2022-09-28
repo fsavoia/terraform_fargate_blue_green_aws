@@ -71,6 +71,6 @@ variable "object_lock_mode" {
 
 variable "object_lock_days" {
   type        = number
-  default     = 1
+  default     = 365
   description = "The number of days that you want to specify for the default retention period"
 }
