@@ -23,7 +23,7 @@ variable "availability_zones" {
 }
 
 variable "vpc_cidr_block" {
-  type        = string  
+  type        = string
   default     = "10.10.0.0/16"
   description = "Define VPC CIDR block"
 }

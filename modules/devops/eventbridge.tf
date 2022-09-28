@@ -19,7 +19,7 @@ resource "aws_cloudwatch_event_rule" "codepipeline" {
 EOF
 }
 
-#EventBride rtarget ule to start CodePipeline
+#EventBride target rule to start CodePipeline
 resource "aws_cloudwatch_event_target" "codepipeline_target" {
   rule     = aws_cloudwatch_event_rule.codepipeline.name
   arn      = aws_codepipeline.codepipeline.arn

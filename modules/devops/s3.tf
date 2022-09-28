@@ -38,11 +38,22 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "poc_kms" {
   }
 }
 
-
 #S3 for Cloudtrail used by S3 data events
 resource "aws_s3_bucket" "trail" {
-  bucket        = "cloudtrail-codepipeline-${aws_codepipeline.codepipeline.name}"
-  force_destroy = true
+  bucket              = "cloudtrail-codepipeline-${aws_codepipeline.codepipeline.name}"
+  force_destroy       = true
+  object_lock_enabled = var.object_lock_enabled
+}
+
+resource "aws_s3_bucket_object_lock_configuration" "object_lock_trail" {
+  bucket = aws_s3_bucket.trail.id
+
+  rule {
+    default_retention {
+      mode = var.object_lock_mode
+      days = var.object_lock_days
+    }
+  }
 }
 
 resource "aws_s3_bucket_public_access_block" "block_public_acls_trail" {

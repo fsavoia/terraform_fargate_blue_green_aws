@@ -162,3 +162,21 @@ variable "eventbridge_rule_description" {
   default     = "Amazon CloudWatch Events rule to automatically start your pipeline when a change occurs in the Amazon S3 object key or S3 folder. Deleting this may prevent changes from being detected in that pipeline. Read more: http://docs.aws.amazon.com/codepipeline/latest/userguide/pipelines-about-starting.html"
   description = "CodePipeline EventBridge role description"
 }
+
+variable "object_lock_enabled" {
+  type        = bool
+  default     = false
+  description = "Indicates whether this bucket has an Object Lock configuration enabled"
+}
+
+variable "object_lock_mode" {
+  type        = string
+  default     = "GOVERNANCE"
+  description = "The default Object Lock retention mode you want to apply to new objects placed in the specified bucket"
+}
+
+variable "object_lock_days" {
+  type        = number
+  default     = 365
+  description = "The number of days that you want to specify for the default retention period"
+}
