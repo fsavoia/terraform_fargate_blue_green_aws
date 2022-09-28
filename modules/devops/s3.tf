@@ -42,7 +42,7 @@ resource "aws_s3_bucket_server_side_encryption_configuration" "poc_kms" {
 resource "aws_s3_bucket" "trail" {
   bucket              = "cloudtrail-codepipeline-${aws_codepipeline.codepipeline.name}"
   force_destroy       = true
-  object_lock_enabled = var.object_lock_enabled
+  object_lock_enabled = true
 }
 
 resource "aws_s3_bucket_object_lock_configuration" "object_lock_trail" {

@@ -52,4 +52,6 @@ module "devops" {
   aws_lb_listener_test     = module.ecs.aws_lb_listener_test
   aws_lb_target_group_prod = module.ecs.aws_lb_target_group_prod
   aws_lb_target_group_test = module.ecs.aws_lb_target_group_test
+  object_lock_mode         = var.object_lock_mode
+  object_lock_days         = var.object_lock_days
 }

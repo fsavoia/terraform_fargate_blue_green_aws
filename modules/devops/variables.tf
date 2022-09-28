@@ -163,20 +163,12 @@ variable "eventbridge_rule_description" {
   description = "CodePipeline EventBridge role description"
 }
 
-variable "object_lock_enabled" {
-  type        = bool
-  default     = false
-  description = "Indicates whether this bucket has an Object Lock configuration enabled"
-}
-
 variable "object_lock_mode" {
   type        = string
-  default     = "GOVERNANCE"
   description = "The default Object Lock retention mode you want to apply to new objects placed in the specified bucket"
 }
 
 variable "object_lock_days" {
   type        = number
-  default     = 365
   description = "The number of days that you want to specify for the default retention period"
 }

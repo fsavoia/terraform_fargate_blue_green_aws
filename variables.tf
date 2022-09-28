@@ -59,3 +59,18 @@ variable "scale_max_capacity" {
   default     = 2
   description = "Define max containers capacity for ECS Service Autoscale"
 }
+
+#--------------------------------------------
+# Variables to deploy DevOps module
+#--------------------------------------------
+variable "object_lock_mode" {
+  type        = string
+  default     = "GOVERNANCE"
+  description = "The default Object Lock retention mode you want to apply to new objects placed in the specified bucket"
+}
+
+variable "object_lock_days" {
+  type        = number
+  default     = 1
+  description = "The number of days that you want to specify for the default retention period"
+}
