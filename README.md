@@ -118,38 +118,43 @@ terraform destroy --auto-approve
 
 ## Providers
 
-| Name | Version |
-|------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 4.0  |
+No providers.
 
 ## Modules
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_network"></a> [network](modules/network) | modules/network | n/a |
-| <a name="module_ec2"></a> [ec2](modules/ec2) | modules/ec2 | n/a |
-| <a name="module_devops"></a> [devops](modules/devops) | modules/devops | n/a |
-| <a name="module_ecs"></a> [ecs](modules/ecs) | modules/ecs | n/a |
+| <a name="module_devops"></a> [devops](#module\_devops) | ./modules/devops | n/a |
+| <a name="module_ec2"></a> [ec2](#module\_ec2) | ./modules/ec2 | n/a |
+| <a name="module_ecs"></a> [ecs](#module\_ecs) | ./modules/ecs | n/a |
+| <a name="module_network"></a> [network](#module\_network) | ./modules/network | n/a |
 
+## Resources
+
+No resources.
 
 ## Inputs
 
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
-| <a name="availability_zones"></a> [availability_zones](./variables.tf) | Availability Zones names | `list(string)` | `["us-east-1a", "us-east-1b", "us-east-1c"]` | no |
-| <a name="vpc_cidr_block"></a> [vpc_cidr_block](./variables.tf) | The VPC CIDR block | `string` | `"10.10.0.0/16"` | no |
-| <a name="public_subnet_cidr_block"></a> [public_subnet_cidr_block](./variables.tf) | The public subnet CIDR bock | `list(string)` | `["10.10.0.0/24", "10.10.1.0/24", "10.10.2.0/24"]` | no |
-| <a name="private_subnet_cidr_block"></a> [private_subnet_cidr_block](./variables.tf) | The private subnet CIDR bock | `list(string)` | `["10.10.3.0/24", "10.10.4.0/24", "10.10.5.0/24"]` | no |
-| <a name="vpc_name"></a> [vpc_name](./variables.tf) | The VPC name | `string` | `"poc-ecs"` | no |
-| <a name="scale_min_capacity"></a> [scale_min_capacity](./variables.tf) | Define min containers capacity for ECS Service Autoscale | `number` | `1` | no |
-| <a name="scale_max_capacity"></a> [scale_max_capacity](./variables.tf) | Define max containers capacity for ECS Service Autoscale| `number` | `2` | no |
+| <a name="input_availability_zones"></a> [availability\_zones](#input\_availability\_zones) | Define subnets AZs | `list(string)` | <pre>[<br>  "us-east-1a",<br>  "us-east-1b",<br>  "us-east-1c"<br>]</pre> | no |
+| <a name="input_instance_type"></a> [instance\_type](#input\_instance\_type) | Define EC2 instance type | `string` | `"jenkins-lab"` | no |
+| <a name="input_name"></a> [name](#input\_name) | Define EC2 TAG name | `string` | `"t2.medium"` | no |
+| <a name="input_object_lock_days"></a> [object\_lock\_days](#input\_object\_lock\_days) | The number of days that you want to specify for the default retention period | `number` | `365` | no |
+| <a name="input_object_lock_mode"></a> [object\_lock\_mode](#input\_object\_lock\_mode) | The default Object Lock retention mode you want to apply to new objects placed in the specified bucket | `string` | `"GOVERNANCE"` | no |
+| <a name="input_private_subnet_cidr_block"></a> [private\_subnet\_cidr\_block](#input\_private\_subnet\_cidr\_block) | Define private subnet CIDRs | `list(string)` | <pre>[<br>  "10.10.3.0/24",<br>  "10.10.4.0/24",<br>  "10.10.5.0/24"<br>]</pre> | no |
+| <a name="input_public_subnet_cidr_block"></a> [public\_subnet\_cidr\_block](#input\_public\_subnet\_cidr\_block) | Define public subnet CIDRs | `list(string)` | <pre>[<br>  "10.10.0.0/24",<br>  "10.10.1.0/24",<br>  "10.10.2.0/24"<br>]</pre> | no |
+| <a name="input_scale_max_capacity"></a> [scale\_max\_capacity](#input\_scale\_max\_capacity) | Define max containers capacity for ECS Service Autoscale | `number` | `2` | no |
+| <a name="input_scale_min_capacity"></a> [scale\_min\_capacity](#input\_scale\_min\_capacity) | Define min containers capacity for ECS Service Autoscale | `number` | `1` | no |
+| <a name="input_vpc_cidr_block"></a> [vpc\_cidr\_block](#input\_vpc\_cidr\_block) | Define VPC CIDR block | `string` | `"10.10.0.0/16"` | no |
+| <a name="input_vpc_name"></a> [vpc\_name](#input\_vpc\_name) | Define the name of the network | `string` | `"poc-ecs"` | no |
 
 ## Outputs
 
 | Name | Description |
 |------|-------------|
-| <a name="vpc_id"></a> [vpc_id](modules/network/output.tf) | The VPC ID |
-| <a name="aws_public_security_group_id"></a> [aws_public_security_group_id](modules/network/output.tf) | The public security group IDs |
-| <a name="public_subnet_ids"></a> [public_subnet_ids](modules/network/output.tf) | The public subnet IDs |
-| <a name="private_subnet_ids"></a> [private_subnet_ids](modules/network/output.tf) | The private subnet IDs |
+| <a name="output_aws_public_security_group_id"></a> [aws\_public\_security\_group\_id](#output\_aws\_public\_security\_group\_id) | n/a |
+| <a name="output_private_subnet_ids"></a> [private\_subnet\_ids](#output\_private\_subnet\_ids) | n/a |
+| <a name="output_public_subnet_ids"></a> [public\_subnet\_ids](#output\_public\_subnet\_ids) | n/a |
+| <a name="output_vpc_id"></a> [vpc\_id](#output\_vpc\_id) | n/a |
 <!-- END OF PRE-COMMIT-TERRAFORM DOCS HOOK -->
