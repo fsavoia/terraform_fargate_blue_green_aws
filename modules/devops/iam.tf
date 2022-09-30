@@ -342,3 +342,56 @@ resource "aws_iam_policy_attachment" "codepipeline-iam-attach" {
   roles      = [aws_iam_role.codepipeline_role.name]
   policy_arn = aws_iam_policy.pipeline_policy_document.arn
 }
+
+
+# Creating CloudTrail_CloudWatchLogs_Role
+resource "aws_iam_policy" "Cloudtrail-CloudWatchLogs" {
+  name        = "Cloudtrail-CloudWatchLogs"
+  path        = "/"
+  description = "Cloudtrail-CloudWatchLogs"
+  policy      = <<EOF
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "logs:CreateLogStream",
+                "logs:PutLogEvents",
+                "logs:DescribeLogStreams"
+            ],
+            "Resource": [
+                "${aws_cloudwatch_log_group.cloudtrail.arn}:*"
+            ]
+        }
+    ]
+}
+EOF
+}
+
+# IAM Role for Cloudtrail
+resource "aws_iam_role" "CloudTrail_Role" {
+  name               = "CloudTrail_CloudWatchLogs_Role"
+  assume_role_policy = <<EOF
+{
+  "Version": "2012-10-17",
+  "Statement": [
+    {
+      "Sid": "",
+      "Effect": "Allow",
+      "Principal": {
+        "Service": "cloudtrail.amazonaws.com"
+      },
+      "Action": "sts:AssumeRole"
+    }
+  ]
+}
+EOF
+}
+
+# Attach policy document to a role
+resource "aws_iam_policy_attachment" "CloudTrail_iam_attach" {
+  name       = "cloudtrail_policy_attachment"
+  roles      = ["${aws_iam_role.CloudTrail_Role.name}"]
+  policy_arn = aws_iam_policy.Cloudtrail-CloudWatchLogs.arn
+}
